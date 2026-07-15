@@ -40,19 +40,25 @@ Use these commands in a second terminal while the server is running to quickly t
 
 Implemented tool categories:
 
+- `application`
+- `channel`
 - `guild`
+- `member`
 - `user`
 
 Current tools:
 
-| Category | Tool                 | Description                                      |
-| -------- | -------------------- | ------------------------------------------------ |
-| guild    | `get_guilds`         | List guilds visible to the authenticated user.   |
-| guild    | `get_guild`          | Get details for a guild by ID.                   |
-| guild    | `get_guild_channels` | List channels in a guild.                        |
-| guild    | `get_guild_members`  | List members in a guild with pagination support. |
-| user     | `get_current_user`   | Get the authenticated user.                      |
-| user     | `get_user`           | Get a user by ID.                                |
+| Category    | Tool                      | Description                                      |
+| ----------- | ------------------------- | ------------------------------------------------ |
+| application | `get_current_application` | Get info about the current Discord application.  |
+| channel     | `get_channel`             | Get details about one channel by ID.             |
+| guild       | `get_guilds`              | List guilds visible to the authenticated user.   |
+| guild       | `get_guild`               | Get details for a guild by ID.                   |
+| guild       | `get_guild_channels`      | List channels in a guild.                        |
+| guild       | `get_guild_members`       | List members in a guild with pagination support. |
+| member      | `get_member`              | Get one guild member by guild/user IDs.          |
+| user        | `get_current_user`        | Get the authenticated user.                      |
+| user        | `get_user`                | Get a user by ID.                                |
 
 ### Example usage
 
@@ -74,13 +80,13 @@ curl -sS http://127.0.0.1:3000 \
   -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_guilds","arguments":{}}}' | jq '.result.structuredContent'
 ```
 
-#### Call `get_current_user`
+#### Call `get_guild` with a guild ID
 
 ```bash
 curl -sS http://127.0.0.1:3000 \
   -H 'content-type: application/json' \
   -H 'accept: application/json, text/event-stream' \
-  -d '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_current_user","arguments":{}}}' | jq '.result.structuredContent'
+  -d '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_guild","arguments":{"guild_id":"1234567890"}}}' | jq '.result.structuredContent'
 ```
 
 _And so on for other possible tools._

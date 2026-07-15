@@ -19,7 +19,11 @@ impl Server {
     pub(crate) fn new(bot_http: Arc<Http>) -> Self {
         Self {
             bot_http,
-            tool_router: Self::guild_router() + Self::user_router(),
+            tool_router: Self::application_router()
+                + Self::channel_router()
+                + Self::guild_router()
+                + Self::member_router()
+                + Self::user_router(),
         }
     }
 

@@ -1,6 +1,9 @@
 use rmcp::model::ErrorData;
 
+mod application;
+mod channel;
 mod guild;
+mod member;
 mod user;
 
 pub(crate) fn parse_snowflake(param_name: &'static str, value: &str) -> Result<u64, ErrorData> {
