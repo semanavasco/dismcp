@@ -8,13 +8,11 @@ Simple Discord MCP HTTP server built with:
 > [!NOTE]
 > The project is in early development. The goal is to provide a simple HTTP server that exposes Discord bot functionality via the MCP protocol. This allows for easy integration with other tools and services that support MCP (such as AI agents).
 >
-> The project is designed to be easily extensible, allowing developers to add more tools as needed.
->
-> I plan to add more tools in the future, such as sending messages, managing channels, emojis, servers, and more. The end goal is to provide a comprehensive set of tools that cover most of the Discord bot functionality.
+> The project is designed to be easily extensible, allowing developers to add more tools as needed. The end goal is to provide a comprehensive set of tools that cover most of the Discord bot functionality.
 
 ## Requirements
 
-- Rust toolchain
+- Rust toolchain (cargo)
 - A Discord bot token
 
 Environment variables:
@@ -34,11 +32,7 @@ If you want a custom bind:
 MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
 ```
 
-## Fast development test loop
-
-Use these commands in a second terminal while the server is running to quickly test your tools.
-
-Implemented tool categories:
+## Implemented tool categories:
 
 - `application`
 - `channel`
@@ -49,12 +43,13 @@ Implemented tool categories:
 - `role`
 - `user`
 
-Current tools:
+### Current tools:
 
 | Category    | Tool                                          | Description                                        |
 | ----------- | --------------------------------------------- | -------------------------------------------------- |
 | application | `get_current_application`                     | Get info about the current Discord application.    |
 | application | `edit_bot_profile`                            | Edit the bot username, avatar, or banner.          |
+| channel     | `search_guild_channels`                       | Search channels in a guild by name/type.           |
 | channel     | `get_channel`                                 | Get details about one channel by ID.               |
 | channel     | `get_dm_channels`                             | List DM channels for the authenticated user.       |
 | channel     | `create_dm_channel`                           | Create/get a DM channel with a target user.        |
@@ -107,6 +102,7 @@ Current tools:
 | message     | `clear_message_reactions`                     | Clear all reactions from a message.                |
 | message     | `clear_message_emoji_reactions`               | Clear one emoji's reactions from a message.        |
 | message     | `get_message_reaction_users`                  | List users who reacted with a specific emoji.      |
+| role        | `search_guild_roles`                          | Search roles in a guild by name.                   |
 | role        | `get_guild_roles`                             | List roles in a guild.                             |
 | role        | `get_guild_role`                              | Get one role by ID.                                |
 | role        | `create_guild_role`                           | Create a role in a guild.                          |
@@ -115,13 +111,13 @@ Current tools:
 | role        | `edit_guild_role_position`                    | Edit role ordering/position.                       |
 | role        | `add_member_role`                             | Assign a role to a guild member.                   |
 | role        | `remove_member_role`                          | Remove a role from a guild member.                 |
-| channel     | `search_guild_channels`                       | Search channels in a guild by name/type.           |
-| role        | `search_guild_roles`                          | Search roles in a guild by name.                   |
 | user        | `search_guild_members`                        | Search members by username/global name/nickname.   |
 | user        | `get_current_user`                            | Get the authenticated user.                        |
 | user        | `get_user`                                    | Get a user by ID.                                  |
 
 ### Example usage
+
+Use these commands in a second terminal while the server is running to quickly test your tools.
 
 #### List tools
 
@@ -151,6 +147,90 @@ curl -sS http://127.0.0.1:3000 \
 ```
 
 _And so on for other possible tools._
+
+## How to wire it to your AI agent
+
+### 1. Start dismcp
+
+```bash
+DISCORD_TOKEN=your_bot_token cargo run
+# Server listens on http://127.0.0.1:3000/
+```
+
+### 2. Wire it to your AI agent
+
+#### Claude Desktop / Claude Code
+
+Add to `~/.claude/settings.json` (Claude Code) or the Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "discord": {
+      "type": "url",
+      "url": "http://127.0.0.1:3000/"
+    }
+  }
+}
+```
+
+#### Cursor
+
+Add to `.cursor/mcp.json` in your project (or the global settings):
+
+```json
+{
+  "mcpServers": {
+    "discord": {
+      "url": "http://127.0.0.1:3000/"
+    }
+  }
+}
+```
+
+#### VS Code (Copilot / GitHub Copilot Chat)
+
+Add to `.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "discord": {
+      "type": "http",
+      "url": "http://127.0.0.1:3000/"
+    }
+  }
+}
+```
+
+#### Antigravity
+
+Add to `.agents/mcp.json` in your workspace (or better: to `~/gemini/antigravity/mcp_config.json` for better support):
+
+```json
+{
+  "mcpServers": {
+    "discord": {
+      "url": "http://127.0.0.1:3000/"
+    }
+  }
+}
+```
+
+#### Other clients
+
+Refer to their documentation for how to add a custom MCP server.
+
+### 3. That's it
+
+Once wired, the agent sees all Discord tools (channels, messages, roles, emojis, etc.) and can call them directly. For example, you could ask the agent:
+
+> _"List my Discord servers and find the #general channel in my test server"_
+
+and it would call `get_guilds` & `search_guild_channels` autonomously.
+
+> [!NOTE]
+> dismcp runs in **stateless mode** (`with_stateful_mode(false)`), so there's no session management; every request is independent, which makes it compatible with essentially any MCP client without needing SSE session handling.
 
 ## Code checks
 
