@@ -1,3 +1,5 @@
+//! Tool definitions for application-related Discord operations.
+
 use base64::Engine;
 use rmcp::{
     handler::server::wrapper::Parameters,

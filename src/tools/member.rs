@@ -1,3 +1,5 @@
+//! Tool definitions for guild member-related Discord operations (kick, ban, timeout, etc.).
+
 use crate::{
     server::{Server, structured},
     tools::{GuildUserParams, parse_snowflake},

@@ -1,3 +1,5 @@
+//! Tool definitions for guild-related Discord operations, including scheduled events and invites.
+
 use rmcp::{
     handler::server::wrapper::Parameters,
     model::{CallToolResult, ErrorData},

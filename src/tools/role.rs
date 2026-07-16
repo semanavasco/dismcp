@@ -1,3 +1,5 @@
+//! Tool definitions for role-related Discord operations.
+
 use rmcp::{
     handler::server::wrapper::Parameters,
     model::{CallToolResult, ErrorData},

@@ -1,3 +1,8 @@
+//! The main entry point for the `dismcp` server.
+//!
+//! This module sets up the configuration, initializes the Discord API client
+//! via `serenity`, and starts the axum-based HTTP server using `rmcp`.
+
 use std::sync::Arc;
 
 use rmcp::transport::streamable_http_server::{

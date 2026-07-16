@@ -1,3 +1,5 @@
+//! Tool definitions for webhook-related Discord operations.
+
 use rmcp::{
     handler::server::wrapper::Parameters,
     model::{CallToolResult, ErrorData},
