@@ -42,23 +42,84 @@ Implemented tool categories:
 
 - `application`
 - `channel`
+- `emoji`
 - `guild`
+- `message`
 - `member`
+- `role`
 - `user`
 
 Current tools:
 
-| Category    | Tool                      | Description                                      |
-| ----------- | ------------------------- | ------------------------------------------------ |
-| application | `get_current_application` | Get info about the current Discord application.  |
-| channel     | `get_channel`             | Get details about one channel by ID.             |
-| guild       | `get_guilds`              | List guilds visible to the authenticated user.   |
-| guild       | `get_guild`               | Get details for a guild by ID.                   |
-| guild       | `get_guild_channels`      | List channels in a guild.                        |
-| guild       | `get_guild_members`       | List members in a guild with pagination support. |
-| member      | `get_member`              | Get one guild member by guild/user IDs.          |
-| user        | `get_current_user`        | Get the authenticated user.                      |
-| user        | `get_user`                | Get a user by ID.                                |
+| Category    | Tool                                          | Description                                        |
+| ----------- | --------------------------------------------- | -------------------------------------------------- |
+| application | `get_current_application`                     | Get info about the current Discord application.    |
+| application | `edit_bot_profile`                            | Edit the bot username, avatar, or banner.          |
+| channel     | `get_channel`                                 | Get details about one channel by ID.               |
+| channel     | `get_dm_channels`                             | List DM channels for the authenticated user.       |
+| channel     | `create_dm_channel`                           | Create/get a DM channel with a target user.        |
+| channel     | `get_guild_channels`                          | List channels in a guild.                          |
+| channel     | `create_guild_channel`                        | Create a guild channel (text, voice, forum, etc).  |
+| channel     | `edit_channel`                                | Edit a channel, including typed forum fields.      |
+| channel     | `delete_channel`                              | Delete a guild or DM channel.                      |
+| channel     | `create_forum_post`                           | Create a post in a forum channel.                  |
+| channel     | `edit_forum_post_tags`                        | Replace applied tags on a forum post/thread.       |
+| channel     | `get_guild_active_threads`                    | List active threads/posts in a guild.              |
+| channel     | `get_channel_archived_public_threads`         | List archived public threads/posts in a channel.   |
+| channel     | `get_channel_archived_private_threads`        | List archived private threads in a channel.        |
+| channel     | `get_channel_joined_archived_private_threads` | List joined archived private threads in a channel. |
+| channel     | `get_channel_thread_members`                  | List members currently in a thread channel.        |
+| channel     | `join_thread_channel`                         | Join a thread channel.                             |
+| channel     | `leave_thread_channel`                        | Leave a thread channel.                            |
+| channel     | `get_channel_invites`                         | List invites for a channel.                        |
+| channel     | `create_channel_invite`                       | Create an invite for a channel.                    |
+| channel     | `delete_invite`                               | Delete an invite by code.                          |
+| emoji       | `get_guild_emojis`                            | List guild emojis.                                 |
+| emoji       | `get_guild_emoji`                             | Get one guild emoji by ID.                         |
+| emoji       | `create_guild_emoji`                          | Create a guild emoji from a data URI image.        |
+| emoji       | `edit_guild_emoji`                            | Edit a guild emoji name/roles.                     |
+| emoji       | `delete_guild_emoji`                          | Delete a guild emoji.                              |
+| emoji       | `get_application_emojis`                      | List application emojis.                           |
+| emoji       | `get_application_emoji`                       | Get one application emoji by ID.                   |
+| emoji       | `create_application_emoji`                    | Create an application emoji from data URI image.   |
+| emoji       | `edit_application_emoji`                      | Edit an application emoji name.                    |
+| emoji       | `delete_application_emoji`                    | Delete an application emoji.                       |
+| guild       | `get_guilds`                                  | List guilds visible to the authenticated user.     |
+| guild       | `get_guild`                                   | Get details for a guild by ID.                     |
+| guild       | `get_guild_members`                           | List members in a guild with pagination support.   |
+| member      | `get_member`                                  | Get one guild member by guild/user IDs.            |
+| member      | `kick_member`                                 | Kick a member from a guild.                        |
+| member      | `ban_member`                                  | Ban a user from a guild.                           |
+| member      | `unban_member`                                | Unban a user from a guild.                         |
+| member      | `timeout_member`                              | Set a member timeout until a timestamp.            |
+| member      | `clear_member_timeout`                        | Remove a member timeout.                           |
+| message     | `get_message`                                 | Get one message by channel/message IDs.            |
+| message     | `get_messages`                                | List channel messages with pagination.             |
+| message     | `send_message`                                | Send a rich message to guild channels or DMs.      |
+| message     | `edit_message`                                | Edit a rich message in guild channels or DMs.      |
+| message     | `delete_message`                              | Delete a message in guild channels or DMs.         |
+| message     | `get_pinned_messages`                         | List pinned messages in a channel.                 |
+| message     | `pin_message`                                 | Pin a message in a channel.                        |
+| message     | `unpin_message`                               | Unpin a message in a channel.                      |
+| message     | `add_message_reaction`                        | Add a reaction to a message.                       |
+| message     | `remove_own_message_reaction`                 | Remove the bot's reaction from a message.          |
+| message     | `remove_user_message_reaction`                | Remove another user's reaction from a message.     |
+| message     | `clear_message_reactions`                     | Clear all reactions from a message.                |
+| message     | `clear_message_emoji_reactions`               | Clear one emoji's reactions from a message.        |
+| message     | `get_message_reaction_users`                  | List users who reacted with a specific emoji.      |
+| role        | `get_guild_roles`                             | List roles in a guild.                             |
+| role        | `get_guild_role`                              | Get one role by ID.                                |
+| role        | `create_guild_role`                           | Create a role in a guild.                          |
+| role        | `edit_guild_role`                             | Edit an existing guild role.                       |
+| role        | `delete_guild_role`                           | Delete a guild role.                               |
+| role        | `edit_guild_role_position`                    | Edit role ordering/position.                       |
+| role        | `add_member_role`                             | Assign a role to a guild member.                   |
+| role        | `remove_member_role`                          | Remove a role from a guild member.                 |
+| channel     | `search_guild_channels`                       | Search channels in a guild by name/type.           |
+| role        | `search_guild_roles`                          | Search roles in a guild by name.                   |
+| user        | `search_guild_members`                        | Search members by username/global name/nickname.   |
+| user        | `get_current_user`                            | Get the authenticated user.                        |
+| user        | `get_user`                                    | Get a user by ID.                                  |
 
 ### Example usage
 

@@ -21,8 +21,11 @@ impl Server {
             bot_http,
             tool_router: Self::application_router()
                 + Self::channel_router()
+                + Self::emoji_router()
                 + Self::guild_router()
+                + Self::message_router()
                 + Self::member_router()
+                + Self::role_router()
                 + Self::user_router(),
         }
     }

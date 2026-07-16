@@ -369,6 +369,7 @@ name = "dismcp"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "base64",
  "rmcp",
  "schemars",
  "serde",

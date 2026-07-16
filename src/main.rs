@@ -20,6 +20,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = AppConfig::from_env();
 
     let discord_http = Arc::new(Http::new(&config.discord_token));
+    let current_application = discord_http.get_current_application_info().await?;
+    discord_http.set_application_id(current_application.id);
+
     let service: StreamableHttpService<Server, LocalSessionManager> = StreamableHttpService::new(
         {
             let discord_http = discord_http.clone();
@@ -35,6 +38,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let listener = tokio::net::TcpListener::bind(&config.bind_address).await?;
 
     info!(address = %config.bind_address, "Discord MCP server listening");
+    info!(
+        application_id = %current_application.id,
+        "Initialized Discord application context"
+    );
     info!("MCP endpoint: http://{}/", config.bind_address);
 
     axum::serve(listener, router)

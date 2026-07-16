@@ -9,7 +9,7 @@ use serenity::{http::GuildPagination, model::id::GuildId};
 
 use crate::{
     server::{Server, structured},
-    tools::parse_snowflake,
+    tools::{GuildIdParams, parse_snowflake},
 };
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -23,12 +23,6 @@ struct GetGuildsParams {
     before: Option<String>,
     #[schemars(description = "Fetch guilds after this guild ID (snowflake, as string).")]
     after: Option<String>,
-}
-
-#[derive(Debug, Deserialize, JsonSchema)]
-struct GuildIdParam {
-    #[schemars(description = "Guild ID (snowflake, as string).")]
-    guild_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -98,33 +92,13 @@ impl Server {
     #[tool(description = "Get details for a specific guild.")]
     async fn get_guild(
         &self,
-        Parameters(GuildIdParam { guild_id }): Parameters<GuildIdParam>,
+        Parameters(GuildIdParams { guild_id }): Parameters<GuildIdParams>,
     ) -> Result<CallToolResult, ErrorData> {
         let guild_id = GuildId::new(parse_snowflake("guild_id", &guild_id)?);
 
         structured(self.bot_http().get_guild(guild_id).await.map_err(|error| {
             ErrorData::internal_error(format!("Failed to fetch guild: {error}"), None)
         })?)
-    }
-
-    #[tool(description = "List channels in a specific guild.")]
-    async fn get_guild_channels(
-        &self,
-        Parameters(GuildIdParam { guild_id }): Parameters<GuildIdParam>,
-    ) -> Result<CallToolResult, ErrorData> {
-        let guild_id = GuildId::new(parse_snowflake("guild_id", &guild_id)?);
-
-        structured(
-            self.bot_http()
-                .get_channels(guild_id)
-                .await
-                .map_err(|error| {
-                    ErrorData::internal_error(
-                        format!("Failed to fetch guild channels: {error}"),
-                        None,
-                    )
-                })?,
-        )
     }
 
     #[tool(description = "List members from a specific guild.")]
