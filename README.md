@@ -44,7 +44,8 @@ MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
 - `user`
 - `webhook`
 
-### Current tools:
+<details>
+<summary><h3>Current tools:</h3></summary>
 
 | Category    | Tool                                          | Description                                        |
 | ----------- | --------------------------------------------- | -------------------------------------------------- |
@@ -129,6 +130,8 @@ MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
 | webhook     | `edit_webhook`                                | Edit an existing webhook by ID.                    |
 | webhook     | `delete_webhook`                              | Delete a webhook by ID.                            |
 
+</details>
+
 ### Example usage
 
 Use these commands in a second terminal while the server is running to quickly test your tools.
@@ -173,7 +176,8 @@ DISCORD_TOKEN=your_bot_token cargo run
 
 ### 2. Wire it to your AI agent
 
-#### Claude Desktop / Claude Code
+<details>
+<summary><strong>Claude Desktop / Claude Code</strong></summary>
 
 Add to `~/.claude/settings.json` (Claude Code) or the Claude Desktop config:
 
@@ -188,7 +192,10 @@ Add to `~/.claude/settings.json` (Claude Code) or the Claude Desktop config:
 }
 ```
 
-#### Cursor
+</details>
+
+<details>
+<summary><strong>Cursor</strong></summary>
 
 Add to `.cursor/mcp.json` in your project (or the global settings):
 
@@ -202,7 +209,10 @@ Add to `.cursor/mcp.json` in your project (or the global settings):
 }
 ```
 
-#### VS Code (Copilot / GitHub Copilot Chat)
+</details>
+
+<details>
+<summary><strong>VS Code (Copilot / GitHub Copilot Chat)</strong></summary>
 
 Add to `.vscode/mcp.json`:
 
@@ -217,7 +227,10 @@ Add to `.vscode/mcp.json`:
 }
 ```
 
-#### Antigravity
+</details>
+
+<details>
+<summary><strong>Antigravity</strong></summary>
 
 Add to `.agents/mcp.json` in your workspace (or better: to `~/gemini/antigravity/mcp_config.json` for better support):
 
@@ -231,9 +244,14 @@ Add to `.agents/mcp.json` in your workspace (or better: to `~/gemini/antigravity
 }
 ```
 
-#### Other clients
+</details>
+
+<details>
+<summary><strong>Other clients</strong></summary>
 
 Refer to their documentation for how to add a custom MCP server.
+
+</details>
 
 ### 3. That's it
 
@@ -242,14 +260,3 @@ Once wired, the agent sees all Discord tools (channels, messages, roles, emojis,
 > _"List my Discord servers and find the #general channel in my test server"_
 
 and it would call `get_guilds` & `search_guild_channels` autonomously.
-
-> [!NOTE]
-> dismcp runs in **stateless mode** (`with_stateful_mode(false)`), so there's no session management; every request is independent, which makes it compatible with essentially any MCP client without needing SSE session handling.
-
-## Code checks
-
-```bash
-cargo fmt
-cargo check
-cargo clippy
-```
