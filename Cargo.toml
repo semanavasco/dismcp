@@ -2,6 +2,14 @@
 name = "dismcp"
 version = "0.1.0"
 edition = "2024"
+description = "A simple, lightweight HTTP server that exposes Discord bot functionality to AI agents via MCP"
+license = "MIT"
+repository = "https://github.com/semanavasco/dismcp"
+homepage = "https://github.com/semanavasco/dismcp"
+readme = "README.md"
+keywords = ["discord-bot", "mcp-server", "tools", "ai", "http"]
+categories = ["api-bindings", "web-programming::http-server"]
+rust-version = "1.88.0"
 
 [dependencies]
 axum = "0.8.9"
