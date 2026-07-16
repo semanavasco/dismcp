@@ -42,6 +42,7 @@ MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
 - `member`
 - `role`
 - `user`
+- `webhook`
 
 ### Current tools:
 
@@ -82,6 +83,13 @@ MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
 | guild       | `get_guilds`                                  | List guilds visible to the authenticated user.     |
 | guild       | `get_guild`                                   | Get details for a guild by ID.                     |
 | guild       | `get_guild_members`                           | List members in a guild with pagination support.   |
+| guild       | `get_guild_invites`                           | List all active invites in a guild.                |
+| guild       | `get_scheduled_events`                        | List all scheduled events in a guild.              |
+| guild       | `get_scheduled_event`                         | Get details for a scheduled event by ID.           |
+| guild       | `create_scheduled_event`                      | Create a new scheduled event.                      |
+| guild       | `edit_scheduled_event`                        | Edit an existing scheduled event.                  |
+| guild       | `delete_scheduled_event`                      | Delete a scheduled event.                          |
+| guild       | `get_scheduled_event_users`                   | List users subscribed to a scheduled event.        |
 | member      | `get_member`                                  | Get one guild member by guild/user IDs.            |
 | member      | `kick_member`                                 | Kick a member from a guild.                        |
 | member      | `ban_member`                                  | Ban a user from a guild.                           |
@@ -114,6 +122,12 @@ MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
 | user        | `search_guild_members`                        | Search members by username/global name/nickname.   |
 | user        | `get_current_user`                            | Get the authenticated user.                        |
 | user        | `get_user`                                    | Get a user by ID.                                  |
+| webhook     | `get_channel_webhooks`                        | List all webhooks in a specific channel.           |
+| webhook     | `get_guild_webhooks`                          | List all webhooks in a specific guild.             |
+| webhook     | `get_webhook`                                 | Get details for a specific webhook by ID.          |
+| webhook     | `create_webhook`                              | Create a new webhook for a specific channel.       |
+| webhook     | `edit_webhook`                                | Edit an existing webhook by ID.                    |
+| webhook     | `delete_webhook`                              | Delete a webhook by ID.                            |
 
 ### Example usage
 

@@ -10,6 +10,7 @@ mod member;
 mod message;
 mod role;
 mod user;
+mod webhook;
 
 #[derive(Debug, Deserialize, JsonSchema)]
 pub(crate) struct GuildIdParams {

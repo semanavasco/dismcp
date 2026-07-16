@@ -26,7 +26,8 @@ impl Server {
                 + Self::message_router()
                 + Self::member_router()
                 + Self::role_router()
-                + Self::user_router(),
+                + Self::user_router()
+                + Self::webhook_router(),
         }
     }
 
