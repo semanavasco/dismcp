@@ -2,7 +2,7 @@
 
 First off, thank you for considering contributing to `dismcp`!
 
-The goal of this project is to provide a comprehensive, lightweight, and fast HTTP server that exposes Discord bot functionality via the Model Context Protocol (MCP).
+The goal of this project is to provide a comprehensive, lightweight, and fast MCP server that exposes Discord bot functionality.
 
 ## How to Contribute
 

@@ -1,12 +1,12 @@
 # dismcp
 
-Simple Discord MCP HTTP server built with:
+Simple Discord MCP server built with:
 
 - [`serenity`](https://crates.io/crates/serenity) for Discord API access
 - [`rmcp`](https://crates.io/crates/rmcp) for MCP tool serving
 
 > [!NOTE]
-> The project is in early development. The goal is to provide a simple HTTP server that exposes Discord bot functionality via the MCP protocol. This allows for easy integration with other tools and services that support MCP (such as AI agents).
+> The project is in early development. The goal is to provide a simple MCP server that exposes Discord bot functionality. This allows for easy integration with other tools and services that support MCP (such as AI agents).
 >
 > The project is designed to be easily extensible, allowing developers to add more tools as needed. The end goal is to provide a comprehensive set of tools that cover most of the Discord bot functionality.
 

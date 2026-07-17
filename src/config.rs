@@ -10,7 +10,7 @@ pub(crate) enum TransportType {
     /// Use standard input/output for communication with the MCP client.
     Stdio,
     /// Use HTTP for communication with the MCP client.
-    /// The string represents the address the MCP HTTP server will bind to (e.g. `127.0.0.1:3000`).
+    /// The string represents the address the MCP server will bind to in HTTP mode (e.g. `127.0.0.1:3000`).
     Http(String),
 }
 
