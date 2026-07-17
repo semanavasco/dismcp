@@ -18,22 +18,31 @@ Simple Discord MCP HTTP server built with:
 Environment variables:
 
 - `DISCORD_TOKEN` (required)
-- `MCP_BIND_ADDRESS` (optional, default: `127.0.0.1:3000`)
+- `MCP_TRANSPORT` (optional, default: `stdio`. Accepts `stdio` or `http`)
+- `MCP_BIND_ADDRESS` (optional, default: `127.0.0.1:3000`. Used only if transport is `http`)
 - `MCP_ENABLED_TOOLS` (optional, default: `all`. Accepts `all` or a comma-separated list of categories, e.g., `channel,guild,message`)
 
 ## Quick start
+
+By default, the server runs in **stdio** mode, which is meant to be executed directly by AI clients:
 
 ```bash
 DISCORD_TOKEN=your_bot_token cargo run
 ```
 
-If you want a custom bind:
+If you want to run an **HTTP** server for remote access:
 
 ```bash
-MCP_BIND_ADDRESS=127.0.0.1:4000/mcp DISCORD_TOKEN=your_bot_token cargo run
+MCP_TRANSPORT=http DISCORD_TOKEN=your_bot_token cargo run
 ```
 
-Or if you install via `cargo install dismcp` or `cargo install --path .`:
+If you want a custom bind for HTTP:
+
+```bash
+MCP_TRANSPORT=http MCP_BIND_ADDRESS=127.0.0.1:4000/mcp DISCORD_TOKEN=your_bot_token cargo run
+```
+
+Or if you install via `cargo install dismcp` or `cargo install --path .`, you can use the binary directly:
 
 ```bash
 DISCORD_TOKEN=your_bot_token dismcp
@@ -41,11 +50,14 @@ DISCORD_TOKEN=your_bot_token dismcp
 
 ## How to wire it to your AI agent
 
-### 1. Start dismcp
+Most AI clients expect MCP servers to be executed as background subprocesses communicating over standard input/output (`stdio`).
+
+### 1. Install or locate the binary
+
+The easiest way is to install it globally:
 
 ```bash
-DISCORD_TOKEN=your_bot_token cargo run
-# Server listens on http://127.0.0.1:3000/
+cargo install dismcp
 ```
 
 ### 2. Wire it to your AI agent
@@ -59,8 +71,10 @@ Add to `~/.claude/settings.json` (Claude Code) or the Claude Desktop config:
 {
   "mcpServers": {
     "discord": {
-      "type": "url",
-      "url": "http://127.0.0.1:3000/"
+      "command": "dismcp",
+      "env": {
+        "DISCORD_TOKEN": "your_bot_token"
+      }
     }
   }
 }
@@ -77,7 +91,10 @@ Add to `.cursor/mcp.json` in your project (or the global settings):
 {
   "mcpServers": {
     "discord": {
-      "url": "http://127.0.0.1:3000/"
+      "command": "dismcp",
+      "env": {
+        "DISCORD_TOKEN": "your_bot_token"
+      }
     }
   }
 }
@@ -92,10 +109,12 @@ Add to `.vscode/mcp.json`:
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "discord": {
-      "type": "http",
-      "url": "http://127.0.0.1:3000/"
+      "command": "dismcp",
+      "env": {
+        "DISCORD_TOKEN": "your_bot_token"
+      }
     }
   }
 }
@@ -112,12 +131,21 @@ Add to `.agents/mcp.json` in your workspace (or better: to `~/gemini/antigravity
 {
   "mcpServers": {
     "discord": {
-      "url": "http://127.0.0.1:3000/"
+      "command": "dismcp",
+      "env": {
+        "DISCORD_TOKEN": "your_bot_token"
+      }
     }
   }
 }
 ```
 
+</details>
+
+<details>
+<summary><strong>Using HTTP mode instead?</strong></summary>
+
+If your client only supports HTTP, or you are running `dismcp` on a different machine, run the server with `MCP_TRANSPORT=http` and configure your client to point to the URL (e.g. `http://127.0.0.1:3000/`).
 </details>
 
 <details>

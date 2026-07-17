@@ -33,7 +33,25 @@ If you are adding a new Discord tool, follow these steps:
 
 ## Quick Testing
 
-To quickly test your tools, you can use `curl` to send JSON-RPC requests to the server. Here are some examples:
+You can test your tools either natively via `stdio` (the default) or via HTTP. We recommend testing both methods to ensure full compatibility.
+
+### Testing via Stdio
+
+The easiest way to test `stdio` mode interactively is using the official MCP Inspector. This will spin up a web interface where you can visually inspect and trigger your tools:
+
+```bash
+DISCORD_TOKEN=your_bot_token npx @modelcontextprotocol/inspector cargo run
+```
+
+### Testing via HTTP
+
+To test via HTTP, first start the server in HTTP mode:
+
+```bash
+MCP_TRANSPORT=http DISCORD_TOKEN=your_bot_token cargo run
+```
+
+Then you can use `curl` to manually send JSON-RPC requests to the server. Here are some examples:
 
 ### List tools
 
