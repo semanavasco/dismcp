@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.0] - 2026-07-17
+
 ### Added
 
 - Added `MCP_TRANSPORT` environment variable to run the server natively via `stdio` (default) or `http`.

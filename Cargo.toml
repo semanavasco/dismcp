@@ -1,6 +1,6 @@
 [package]
 name = "dismcp"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 description = "A simple, lightweight HTTP server that exposes Discord bot functionality to AI agents via MCP"
 license = "MIT"
