@@ -19,6 +19,7 @@ Environment variables:
 
 - `DISCORD_TOKEN` (required)
 - `MCP_BIND_ADDRESS` (optional, default: `127.0.0.1:3000`)
+- `MCP_ENABLED_TOOLS` (optional, default: `all`. Accepts `all` or a comma-separated list of categories, e.g., `channel,guild,message`)
 
 ## Quick start
 
@@ -29,7 +30,13 @@ DISCORD_TOKEN=your_bot_token cargo run
 If you want a custom bind:
 
 ```bash
-MCP_BIND_ADDRESS=127.0.0.1:4000 DISCORD_TOKEN=your_bot_token cargo run
+MCP_BIND_ADDRESS=127.0.0.1:4000/mcp DISCORD_TOKEN=your_bot_token cargo run
+```
+
+Or if you install via `cargo install dismcp` or `cargo install --path .`:
+
+```bash
+DISCORD_TOKEN=your_bot_token dismcp
 ```
 
 ## Implemented tool categories:
