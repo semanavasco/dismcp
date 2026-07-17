@@ -29,21 +29,52 @@ pub(crate) struct Server {
 impl Server {
     /// Constructs a new `Server` instance with the given Discord HTTP client.
     ///
-    /// Composes and registers all tool routers (channel, guild, message, etc.).
-    ///
-    /// Add your own tool routers here as needed.
-    pub(crate) fn new(bot_http: Arc<Http>) -> Self {
-        Self {
-            bot_http,
-            tool_router: Self::application_router()
+    /// Composes and registers enabled tool routers (channel, guild, message, etc.).
+    pub(crate) fn new(bot_http: Arc<Http>, enabled_tools: String) -> Self {
+        let tool_router: ToolRouter<Server> = if enabled_tools.trim() == "all" {
+            Self::application_router()
                 + Self::channel_router()
                 + Self::emoji_router()
                 + Self::guild_router()
-                + Self::message_router()
                 + Self::member_router()
+                + Self::message_router()
                 + Self::role_router()
                 + Self::user_router()
-                + Self::webhook_router(),
+                + Self::webhook_router()
+        } else {
+            let mut tool_router = ToolRouter::new();
+
+            let routers = enabled_tools
+                .split(',')
+                .map(|tool| tool.trim())
+                .filter(|tool| !tool.is_empty())
+                .collect::<Vec<_>>();
+
+            for tool in routers {
+                match tool {
+                    "application" => tool_router += Self::application_router(),
+                    "channel" => tool_router += Self::channel_router(),
+                    "emoji" => tool_router += Self::emoji_router(),
+                    "guild" => tool_router += Self::guild_router(),
+                    "member" => tool_router += Self::member_router(),
+                    "message" => tool_router += Self::message_router(),
+                    "role" => tool_router += Self::role_router(),
+                    "user" => tool_router += Self::user_router(),
+                    "webhook" => tool_router += Self::webhook_router(),
+                    _ => {
+                        tracing::error!(
+                            "Unknown tool '{tool}' specified in MCP_ENABLED_TOOLS. Ignoring."
+                        );
+                    }
+                }
+            }
+
+            tool_router
+        };
+
+        Self {
+            bot_http,
+            tool_router,
         }
     }
 

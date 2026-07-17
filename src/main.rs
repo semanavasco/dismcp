@@ -31,7 +31,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let service: StreamableHttpService<Server, LocalSessionManager> = StreamableHttpService::new(
         {
             let discord_http = discord_http.clone();
-            move || Ok(Server::new(discord_http.clone()))
+            move || {
+                Ok(Server::new(
+                    discord_http.clone(),
+                    config.enabled_tools.clone(),
+                ))
+            }
         },
         Default::default(),
         StreamableHttpServerConfig::default()
