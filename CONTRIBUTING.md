@@ -31,6 +31,39 @@ If you are adding a new Discord tool, follow these steps:
 5. **Return standard results:** Map serenity errors to `ErrorData::internal_error` or `ErrorData::invalid_params` where appropriate, and return successful payloads using the `structured()` helper.
 6. **Update README:** Don't forget to add your new tool to the table in `README.md`!
 
+## Quick Testing
+
+To quickly test your tools, you can use `curl` to send JSON-RPC requests to the server. Here are some examples:
+
+### List tools
+
+```bash
+curl -sS http://127.0.0.1:3000 \
+  -H 'content-type: application/json' \
+  -H 'accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' | jq
+```
+
+### Call `get_guilds`
+
+```bash
+curl -sS http://127.0.0.1:3000 \
+  -H 'content-type: application/json' \
+  -H 'accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"get_guilds","arguments":{}}}' | jq '.result.structuredContent'
+```
+
+### Call `get_guild` with a guild ID
+
+```bash
+curl -sS http://127.0.0.1:3000 \
+  -H 'content-type: application/json' \
+  -H 'accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"get_guild","arguments":{"guild_id":"1234567890"}}}' | jq '.result.structuredContent'
+```
+
+_And so on for other possible tools._
+
 ## Code Checks
 
 Before submitting a pull request, please ensure your code passes all checks:
@@ -47,7 +80,7 @@ We use conventional commits. Please format your commit messages like so:
 
 `type(scope): message`
 
-**Types:**
+### Types:
 
 - `feat`: A new feature or tool
 - `fix`: A bug fix
@@ -57,7 +90,8 @@ We use conventional commits. Please format your commit messages like so:
 - `test`: Adding missing tests or correcting existing tests
 - `chore`: Changes to other unrelated tasks (build process, package manager, etc)
 
-**Example:**
+### Example:
+
 `feat(channel): add create_forum_post tool`
 
 ## Questions?
