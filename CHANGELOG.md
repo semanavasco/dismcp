@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-Nothing yet.
+### Added
+
+- Added `--help` (`-h`) and `--version` (`-V`) CLI flags.
 
 ## [0.3.0] - 2026-07-21
 
@@ -37,4 +39,6 @@ Nothing yet.
 - User Tools: Search members and fetch user profiles.
 - Webhook Tools: Full CRUD operations for managing webhooks in channels and guilds.
 
+[0.3.0]: https://github.com/semanavasco/dismcp/releases/tag/v0.3.0
+[0.2.0]: https://github.com/semanavasco/dismcp/releases/tag/v0.2.0
 [0.1.0]: https://github.com/semanavasco/dismcp/releases/tag/v0.1.0
