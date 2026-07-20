@@ -14,12 +14,15 @@ use tracing::info;
 use config::AppConfig;
 use server::Server;
 
+mod cli;
 mod config;
 mod server;
 mod tools;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    cli::handle_args();
+
     tracing_subscriber::fmt()
         .with_writer(std::io::stderr)
         .init();
