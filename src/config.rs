@@ -23,6 +23,8 @@ pub(crate) struct AppConfig {
     /// The tools to enable for the MCP server. Defaults to "all".
     /// Available tools can be specified as a comma-separated list (e.g. "channel,guild,message").
     pub(crate) enabled_tools: String,
+    /// Whether to omit null fields from tool responses. Defaults to `false`.
+    pub(crate) omit_nulls: bool,
 }
 
 impl AppConfig {
@@ -47,10 +49,15 @@ impl AppConfig {
         let enabled_tools = std::env::var("MCP_ENABLED_TOOLS")
             .unwrap_or_else(|_| DEFAULT_ENABLED_TOOLS.to_string());
 
+        let omit_nulls = std::env::var("MCP_OMIT_NULLS")
+            .map(|v| v.to_lowercase() == "true" || v == "1")
+            .unwrap_or(false);
+
         Self {
             discord_token,
             mcp_transport,
             enabled_tools,
+            omit_nulls,
         }
     }
 }

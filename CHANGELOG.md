@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-Nothing yet.
+### Added
+
+- Added `MCP_OMIT_NULLS` environment variable to strip null fields from tool responses, reducing token consumption for AI agents. Defaults to `false`.
 
 ## [0.2.0] - 2026-07-17
 

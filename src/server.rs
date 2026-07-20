@@ -13,7 +13,20 @@ use rmcp::{
     tool_handler,
 };
 use serde::Serialize;
+use serde_json::Value;
 use serenity::http::Http;
+
+/// Global flag controlling whether null fields are stripped from tool responses.
+static OMIT_NULLS: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+
+/// Initializes the global configuration for tool response serialization.
+///
+/// Must be called once at startup before any tools are invoked.
+pub(crate) fn init_config(omit_nulls: bool) {
+    OMIT_NULLS
+        .set(omit_nulls)
+        .expect("init_config must only be called once");
+}
 
 /// The main MCP server state.
 ///
@@ -84,15 +97,38 @@ impl Server {
     }
 }
 
+/// Recursively removes all keys with `null` values from a JSON value tree.
+fn strip_nulls(value: &mut Value) {
+    match value {
+        Value::Object(map) => {
+            map.retain(|_, v| !v.is_null());
+            for v in map.values_mut() {
+                strip_nulls(v);
+            }
+        }
+        Value::Array(arr) => {
+            for v in arr.iter_mut() {
+                strip_nulls(v);
+            }
+        }
+        _ => {}
+    }
+}
+
 /// A helper function to serialize a value into a structured `CallToolResult`.
 ///
 /// Converts the given serializable value into `serde_json::Value` and wraps it in an MCP `CallToolResult`.
+/// If `MCP_OMIT_NULLS` is enabled, all null fields are recursively stripped before returning.
 ///
 /// Use it when you want to return structured JSON data from a tool handler.
 pub(crate) fn structured<T: Serialize>(value: T) -> Result<CallToolResult, ErrorData> {
-    let value = serde_json::to_value(value).map_err(|error| {
+    let mut value = serde_json::to_value(value).map_err(|error| {
         ErrorData::internal_error(format!("Failed to serialize result: {error}"), None)
     })?;
+
+    if *OMIT_NULLS.get().unwrap_or(&false) {
+        strip_nulls(&mut value);
+    }
 
     Ok(CallToolResult::structured(value))
 }

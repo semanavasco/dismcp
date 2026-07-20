@@ -25,6 +25,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let config = AppConfig::from_env();
+    server::init_config(config.omit_nulls);
 
     let discord_http = Arc::new(Http::new(&config.discord_token));
     let current_application = discord_http.get_current_application_info().await?;

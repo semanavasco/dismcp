@@ -21,6 +21,7 @@ Environment variables:
 - `MCP_TRANSPORT` (optional, default: `stdio`. Accepts `stdio` or `http`)
 - `MCP_BIND_ADDRESS` (optional, default: `127.0.0.1:3000`. Used only if transport is `http`)
 - `MCP_ENABLED_TOOLS` (optional, default: `all`. Accepts `all` or a comma-separated list of categories, e.g., `channel,guild,message`)
+- `MCP_OMIT_NULLS` (optional, default: `false`. When set to `true`, all `null` fields are stripped from tool responses to reduce token consumption for AI agents)
 
 ## Quick start
 
