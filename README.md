@@ -64,21 +64,12 @@ cargo install dismcp
 ### 2. Wire it to your AI agent
 
 <details>
-<summary><strong>Claude Desktop / Claude Code</strong></summary>
+<summary><strong>Claude Code</strong></summary>
 
-Add to `~/.claude/settings.json` (Claude Code) or the Claude Desktop config:
+Run the following command to add the MCP server to your Claude Code project:
 
 ```json
-{
-  "mcpServers": {
-    "discord": {
-      "command": "dismcp",
-      "env": {
-        "DISCORD_TOKEN": "your_bot_token"
-      }
-    }
-  }
-}
+claude mcp add discord dismcp -e DISCORD_TOKEN=your_bot_token
 ```
 
 </details>
