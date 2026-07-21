@@ -130,6 +130,12 @@ pub(crate) fn structured<T: Serialize>(value: T) -> Result<CallToolResult, Error
         strip_nulls(&mut value);
     }
 
+    // If the value is an array, wrap it in an object with a "results" key to conform to MCP
+    // expectations.
+    if value.is_array() {
+        value = serde_json::json!({ "results": value });
+    }
+
     Ok(CallToolResult::structured(value))
 }
 
